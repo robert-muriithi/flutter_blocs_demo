@@ -14,7 +14,7 @@ class BeersBloc extends Bloc<BeersEvent, BeersState> {
         /*final beers = await beersRepository.getBeers();
         emit(BeersLoaded(beers));*/
         final beers = await beersRepository.getBeers();
-        beers.fold((l) => emit(BeersError(l)), (r) => emit(BeersLoaded(r)));
+        beers.fold((left) => emit(BeersError(left)), (right) => emit(BeersLoaded(right)));
       } catch (e) {
         emit(BeersError(e.toString()));
       }

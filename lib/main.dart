@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_blocs_demo/repository/beers_repository.dart';
@@ -35,6 +38,16 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
+
+  @override
+  void initState() {
+    super.initState();
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -48,8 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(widget.title),
           ),
           body: BlocProvider(
-            create: (context) => BeersBloc(beersRepository: BeersRepository()
-            )..add(const BeersFetched()),
+            create: (context) => BeersBloc(beersRepository: BeersRepository())..add(const BeersFetched()),
             child: BlocBuilder<BeersBloc, BeersState>(
               builder: (context, state) {
                 if (state is BeersLoading) {
